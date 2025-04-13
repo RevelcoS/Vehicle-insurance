@@ -7,14 +7,6 @@ import config
 from config import Features, TARGET
 
 df = pd.read_csv(config.DATA_PATH)
-
-COLUMNS = df.columns.values
-for column in COLUMNS:
-    values   = df[column]
-    nunique  = values.nunique()
-    complete = values.notna().all()
-    print(f'{column: <20}{nunique: <10}{complete}')
-
 data = df[Features.ALL + TARGET]
 
 # Drop zero insured value
