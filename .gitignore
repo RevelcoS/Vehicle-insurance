@@ -7,4 +7,7 @@
 # Downloads
 data/*
 
+# Python3 environment
+env/
+
 !.gitkeep
