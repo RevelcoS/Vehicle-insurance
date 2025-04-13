@@ -3,10 +3,10 @@ import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, FunctionTransformer
 
-from os.path import join
+import config
+from config import Features, TARGET
 
-path = join('data', 'motor_data14-2018.csv')
-df   = pd.read_csv(path)
+df = pd.read_csv(config.DATA_PATH)
 
 COLUMNS = df.columns.values
 for column in COLUMNS:
@@ -14,14 +14,6 @@ for column in COLUMNS:
     nunique  = values.nunique()
     complete = values.notna().all()
     print(f'{column: <20}{nunique: <10}{complete}')
-
-class Features:
-    CATEGORICAL_OHE = ['INSR_TYPE', 'TYPE_VEHICLE', 'USAGE']
-    CATEGORICAL_ORD = []
-    REAL            = ['PREMIUM']
-    ALL             = CATEGORICAL_OHE + CATEGORICAL_ORD + REAL
-
-TARGET = ['INSURED_VALUE']
 
 data = df[Features.ALL + TARGET]
 

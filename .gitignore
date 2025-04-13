@@ -4,6 +4,9 @@
 # Vim generated files
 *.swp
 
+# Python3 generated files
+__pycache__
+
 # Downloads
 data/*
 
