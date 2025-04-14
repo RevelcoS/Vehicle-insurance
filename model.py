@@ -1,13 +1,14 @@
 import numpy as np
 import pandas as pd
-import statsmodels.api as sm
+# import statsmodels.api as sm
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, FunctionTransformer
+from sklearn.metrics import root_mean_squared_error as rmse
 #from sklearn.pipeline import Pipeline
 #from sklearn.impute import SimpleImputer
 
 from sklearn.model_selection import train_test_split
-#from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression
 
 import config
 from config import Features, TARGET
@@ -39,10 +40,15 @@ def get_data(path=config.DATA_PATH):
 if __name__ == '__main__':
     X, y = get_data()
 
-    X = sm.add_constant(X, prepend=False)
     X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=.20, random_state=config.RANDOM_SEED)
 
-    model   = sm.OLS(y_train, X_train)
-    results = model.fit()
-    print(results.summary())
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+    score = rmse(y_test, y_pred)
+    #for index in range(10):
+    #    print(X_test[index], y_test[index], y_pred[index])
+
+    print(f'RMSE score: {score:.5f}')
